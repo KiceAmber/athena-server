@@ -7,20 +7,15 @@ package service
 
 import (
 	"athena-server/internal/model"
-	"athena-server/internal/model/do"
 	"context"
 )
 
 type (
 	ITag interface {
-		// GetTagList Get Tag List from Database
-		// Now request don not contain page info
 		GetTagList(ctx context.Context, in *model.GetTagListInput) (out *model.GetTagListOutput, err error)
-		// CreateTag Create one tag from admin
-		// check if the tag of name is already exist
-		CreateTag(ctx context.Context, in *model.CreateTagInput) (out *model.CreateTagOutput, err error)
-		UpdateTag(ctx context.Context, tag *do.Tag) (err error)
-		DeleteTag(ctx context.Context) (err error)
+		AddTag(ctx context.Context, in *model.AddTagInput) (out *model.AddTagOutput, err error)
+		UpdateTag(ctx context.Context, in *model.UpdateTagInput) (out *model.UpdateTagOutput, err error)
+		DeleteTag(ctx context.Context, in *model.DeleteTagInput) (out *model.DeleteTagOutput, err error)
 	}
 )
 
