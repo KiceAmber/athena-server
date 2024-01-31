@@ -3,9 +3,9 @@ package main
 import (
 	_ "athena-server/internal/packed"
 
-	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
-	_ "athena-server/internal/logic/logic.go"
+	_ "athena-server/internal/logic"
 
+	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 
 	"github.com/gogf/gf/v2/os/gctx"
 

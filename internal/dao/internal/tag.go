@@ -24,6 +24,7 @@ type TagColumns struct {
 	Name      string // 标签名称
 	CreatedAt string // 创建时间
 	UpdatedAt string // 更新时间
+	DeletedAt string // 删除时间
 }
 
 // tagColumns holds the columns for table tag.
@@ -32,6 +33,7 @@ var tagColumns = TagColumns{
 	Name:      "name",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
+	DeletedAt: "deleted_at",
 }
 
 // NewTagDao creates and returns a new DAO object for table data access.

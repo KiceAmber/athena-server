@@ -73,3 +73,8 @@ pb: cli.install
 .PHONY: pbentity
 pbentity: cli.install
 	@gf gen pbentity
+
+# Run server
+.PHONY: run
+run: cli.install
+	@gf run main.go
