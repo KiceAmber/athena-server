@@ -6,6 +6,7 @@ import (
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
+	"github.com/gogf/gf/os/glog"
 	"github.com/gogf/gf/v2/database/gdb"
 )
 
@@ -28,11 +29,14 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 	articleList := make([]*entity.Article, 0)
 	// use transaction to query the articleList
 	err = dao.Article.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
-		err = tx.Model("article").Scan(&articleList)
+		if err = dao.Article.Ctx(ctx).Scan(&articleList); err != nil {
+			return err
+		}
+		glog.Info("articleList => ", articleList)
 
 		for _, item := range articleList {
-			var authorName string
-			if err = tx.Model("user").Where("id = ?", item.AuthorId).Scan(&authorName); err != nil {
+			var user = &entity.User{}
+			if err = dao.User.Ctx(ctx).Where("id = ?", item.AuthorId).Scan(&user); err != nil {
 				return err
 			}
 
@@ -40,12 +44,11 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 				Id:         item.Id,
 				Title:      item.Title,
 				Content:    item.Content,
-				AuthorName: authorName,
+				AuthorName: user.Passport,
 			}
 
 			out.ArticleList = append(out.ArticleList, article)
 		}
-
 		return err
 	})
 	return
