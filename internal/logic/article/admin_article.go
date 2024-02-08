@@ -6,8 +6,8 @@ import (
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
-	"github.com/gogf/gf/os/glog"
 	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type sArticle struct{}
@@ -27,26 +27,43 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 	}
 
 	articleList := make([]*entity.Article, 0)
-	// use transaction to query the articleList
 	err = dao.Article.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 查询文章表
 		if err = dao.Article.Ctx(ctx).Scan(&articleList); err != nil {
 			return err
 		}
-		glog.Info("articleList => ", articleList)
 
-		for _, item := range articleList {
+		for _, articleItem := range articleList {
+			// 查询文章标签表
+			tagList := make([]*entity.Tag, 0)
+			// select * from article_tag
+			if err := g.Model("tag t").
+				LeftJoin("article_tag at", "t.id = at.tag_id").
+				Fields("t.id, t.name").
+				Where("at.article_id = ?", articleItem.Id).
+				Scan(&tagList); err != nil {
+				return err
+			}
+
+			tagNameList := make([]string, 0)
+			for _, tag := range tagList {
+				tagNameList = append(tagNameList, tag.Name)
+			}
+
+			// 查询文章作者
 			var user = &entity.User{}
-			if err = dao.User.Ctx(ctx).Where("id = ?", item.AuthorId).Scan(&user); err != nil {
+			if err = dao.User.Ctx(ctx).Where("id = ?", articleItem.AuthorId).Scan(&user); err != nil {
 				return err
 			}
 
 			var article = &model.ArticleItem{
-				Id:         item.Id,
-				Title:      item.Title,
-				Content:    item.Content,
+				Id:         articleItem.Id,
+				Title:      articleItem.Title,
+				Content:    articleItem.Content,
+				Image:      articleItem.Image,
 				AuthorName: user.Passport,
+				TagList:    tagNameList,
 			}
-
 			out.ArticleList = append(out.ArticleList, article)
 		}
 		return err
@@ -55,5 +72,6 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 }
 
 func (s sArticle) AddArticle(ctx context.Context, in *model.AddArticleInput) (out *model.AddArticleOutput, err error) {
+
 	return
 }

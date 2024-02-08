@@ -13,7 +13,7 @@ type Article struct {
 	Id        int         `json:"id"         ` // 文章ID
 	Title     string      `json:"title"      ` // 文章标题
 	Content   string      `json:"content"    ` // 文章内容
-	TagId     int         `json:"tag_id"     ` // 文章所属标签ID
+	Image     string      `json:"image"      ` // 文章图片封面
 	AuthorId  int         `json:"author_id"  ` // 文章作者ID
 	CreatedAt *gtime.Time `json:"created_at" ` // 创建时间
 	UpdatedAt *gtime.Time `json:"updated_at" ` // 更新时间

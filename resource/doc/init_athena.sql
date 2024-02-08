@@ -31,8 +31,19 @@ create table `article` (
     `id` int not null auto_increment comment '文章ID',  
     `title` varchar(128) not null comment '文章标题',
     `content` text not null comment '文章内容',
-    `tag_id` int not null comment '文章所属标签ID',
+    `image` varchar(128) default '' comment '文章图片封面',
     `author_id` int not null comment '文章作者ID',
+    `created_at` timestamp not null default current_timestamp comment '创建时间',
+    `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
+    `deleted_at` timestamp default null comment '删除时间',
+    primary key (`id`)
+);
+
+-- table of article_tag
+create table `article_tag` (
+    `id` int not null auto_increment comment '文章标签关联ID',
+    `article_id` int not null comment '文章ID',
+    `tag_id` int not null comment '标签ID',
     `created_at` timestamp not null default current_timestamp comment '创建时间',
     `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     `deleted_at` timestamp default null comment '删除时间',
