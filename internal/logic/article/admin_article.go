@@ -3,6 +3,7 @@ package article
 import (
 	"athena-server/internal/dao"
 	"athena-server/internal/model"
+	"athena-server/internal/model/do"
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
@@ -21,13 +22,12 @@ func New() *sArticle {
 }
 
 func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListInput) (out *model.GetArticleListOutput, err error) {
-	// init out
 	out = &model.GetArticleListOutput{
 		ArticleList: make([]*model.ArticleItem, 0),
 	}
 
 	articleList := make([]*entity.Article, 0)
-	err = dao.Article.Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+	err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 查询文章表
 		if err = dao.Article.Ctx(ctx).Scan(&articleList); err != nil {
 			return err
@@ -66,12 +66,45 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 			}
 			out.ArticleList = append(out.ArticleList, article)
 		}
-		return err
+		return nil
 	})
 	return
 }
 
 func (s sArticle) AddArticle(ctx context.Context, in *model.AddArticleInput) (out *model.AddArticleOutput, err error) {
+	out = &model.AddArticleOutput{}
+
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 先插入文章表
+		article := &do.Article{
+			Title:    in.Title,
+			Content:  in.Content,
+			AuthorId: in.AuthorId,
+		}
+		r, err := dao.Article.Ctx(ctx).Save(article)
+		if err != nil {
+			return err
+		}
+
+		// 再插入文章标签表
+		articleId, err := r.LastInsertId()
+		if err != nil {
+			return err
+		}
+		for _, tagId := range in.TagList {
+			articleTag := &entity.ArticleTag{
+				ArticleId: int(articleId),
+				TagId:     tagId,
+			}
+			_, err := dao.ArticleTag.Ctx(ctx).Save(articleTag)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}); err != nil {
+		return
+	}
 
 	return
 }

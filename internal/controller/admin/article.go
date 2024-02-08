@@ -14,8 +14,6 @@ func NewArticle() *Article {
 }
 
 func (a *Article) GetArticleList(ctx context.Context, req *article.GetArticleListReq) (res *article.GetArticleListRes, err error) {
-
-	// init res
 	res = &article.GetArticleListRes{}
 
 	out, err := service.Article().GetArticleList(ctx, &model.GetArticleListInput{})
@@ -28,6 +26,14 @@ func (a *Article) GetArticleList(ctx context.Context, req *article.GetArticleLis
 }
 
 func (a *Article) AddArticle(ctx context.Context, req *article.AddArticleReq) (res *article.AddArticleRes, err error) {
+	res = &article.AddArticleRes{}
+
+	_, err = service.Article().AddArticle(ctx, &model.AddArticleInput{
+		Title:    req.Title,
+		Content:  req.Content,
+		AuthorId: req.AuthorId,
+		TagList:  req.TagList,
+	})
 
 	return
 }

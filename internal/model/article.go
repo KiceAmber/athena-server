@@ -3,7 +3,7 @@ package model
 type ArticleItem struct {
 	Id         int      `json:"id"`
 	Title      string   `json:"title"`
-	AuthorName string   `json:"author_name"`
+	AuthorName string   `json:"authorName"`
 	Content    string   `json:"content"`
 	Image      string   `json:"image"`
 	TagList    []string `json:"tagList"`
@@ -16,8 +16,10 @@ type GetArticleListOutput struct {
 }
 
 type AddArticleInput struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	AuthorId int    `json:"authorId"`
+	TagList  []int  `json:"tagList"`
 }
 
 type AddArticleOutput struct {
