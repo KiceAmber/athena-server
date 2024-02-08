@@ -14,6 +14,7 @@ type (
 	IArticle interface {
 		GetArticleList(ctx context.Context, in *model.GetArticleListInput) (out *model.GetArticleListOutput, err error)
 		AddArticle(ctx context.Context, in *model.AddArticleInput) (out *model.AddArticleOutput, err error)
+		DeleteArticle(ctx context.Context, in *model.DeleteArticleInput) (out *model.DeleteArticleOutput, err error)
 	}
 )
 

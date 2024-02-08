@@ -24,3 +24,10 @@ type AddArticleInput struct {
 
 type AddArticleOutput struct {
 }
+
+type DeleteArticleInput struct {
+	Id int `json:"id"`
+}
+
+type DeleteArticleOutput struct {
+}
