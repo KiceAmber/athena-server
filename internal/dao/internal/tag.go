@@ -22,6 +22,7 @@ type TagDao struct {
 type TagColumns struct {
 	Id        string // 标签ID
 	Name      string // 标签名称
+	IsVisible string // 标签是否可见 1-可见 0-不可见
 	CreatedAt string // 创建时间
 	UpdatedAt string // 更新时间
 	DeletedAt string // 删除时间
@@ -31,6 +32,7 @@ type TagColumns struct {
 var tagColumns = TagColumns{
 	Id:        "id",
 	Name:      "name",
+	IsVisible: "is_visible",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",

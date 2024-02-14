@@ -1,12 +1,16 @@
 package model
 
+import "github.com/gogf/gf/v2/os/gtime"
+
 type ArticleItem struct {
-	Id         int      `json:"id"`
-	Title      string   `json:"title"`
-	AuthorName string   `json:"authorName"`
-	Content    string   `json:"content"`
-	Image      string   `json:"image"`
-	TagList    []string `json:"tagList"`
+	Id         int         `json:"id"`
+	Title      string      `json:"title"`
+	AuthorName string      `json:"authorName"`
+	Content    string      `json:"content"`
+	Image      string      `json:"image"`
+	TagList    []string    `json:"tagList"`
+	CreatedAt  *gtime.Time `json:"createdAt"`
+	UpdatedAt  *gtime.Time `json:"updatedAt"`
 }
 
 type GetArticleListInput struct{}

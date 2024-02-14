@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"athena-server/internal/controller/admin"
+	"athena-server/internal/controller/blog"
 	"athena-server/internal/middleware"
 	"context"
 
@@ -28,7 +29,11 @@ var (
 						group.Bind(admin.NewArticle())
 					})
 				})
-				apiGroup.Group("/blog", func(blogGroup *ghttp.RouterGroup) {})
+				apiGroup.Group("/blog", func(blogGroup *ghttp.RouterGroup) {
+					blogGroup.Group("/article", func(group *ghttp.RouterGroup) {
+						group.Bind(blog.NewArticle())
+					})
+				})
 			})
 			s.Run()
 			return nil

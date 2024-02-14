@@ -33,6 +33,7 @@ func (s sTag) GetTagList(ctx context.Context, in *model.GetTagListInput) (out *m
 		out.TagList = append(out.TagList, &model.TagItem{
 			Id:        tagEntity.Id,
 			Name:      tagEntity.Name,
+			IsVisible: tagEntity.IsVisible,
 			CreatedAt: tagEntity.CreatedAt,
 		})
 	}
@@ -41,7 +42,9 @@ func (s sTag) GetTagList(ctx context.Context, in *model.GetTagListInput) (out *m
 
 func (s sTag) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.AddTagOutput, err error) {
 	var tag *entity.Tag
-	if err = dao.Tag.Ctx(ctx).Where(do.Tag{Name: in.Name}).Scan(&tag); err != nil {
+	if err = dao.Tag.Ctx(ctx).Where(do.Tag{
+		Name: in.Name,
+	}).Scan(&tag); err != nil {
 		return nil, err
 	}
 
@@ -50,7 +53,8 @@ func (s sTag) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.Add
 	}
 
 	_, err = dao.Tag.Ctx(ctx).Data(do.Tag{
-		Name: in.Name,
+		Name:      in.Name,
+		IsVisible: in.IsVisible,
 	}).Insert()
 	if err != nil {
 		return nil, err
@@ -62,7 +66,8 @@ func (s sTag) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.Add
 
 func (s sTag) UpdateTag(ctx context.Context, in *model.UpdateTagInput) (out *model.UpdateTagOutput, err error) {
 	_, err = dao.Tag.Ctx(ctx).Where(do.Tag{Id: in.Id}).Data(do.Tag{
-		Name: in.Name,
+		Name:      in.Name,
+		IsVisible: in.IsVisible,
 	}).Update()
 	if err != nil {
 		return nil, err

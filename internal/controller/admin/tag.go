@@ -26,7 +26,8 @@ func (t *Tag) GetTagList(ctx context.Context, req *tag.GetTagListReq) (res *tag.
 
 func (t *Tag) AddTag(ctx context.Context, req *tag.AddTagReq) (res *tag.AddTagRes, err error) {
 	_, err = service.Tag().AddTag(ctx, &model.AddTagInput{
-		Name: req.Name,
+		Name:      req.Name,
+		IsVisible: req.IsVisible,
 	})
 
 	if err != nil {
@@ -52,8 +53,9 @@ func (t *Tag) DeleteTag(ctx context.Context, req *tag.DeleteTagReq) (res *tag.De
 
 func (t *Tag) UpdateTag(ctx context.Context, req *tag.UpdateTagReq) (res *tag.UpdateTagRes, err error) {
 	_, err = service.Tag().UpdateTag(ctx, &model.UpdateTagInput{
-		Id:   req.Id,
-		Name: req.Name,
+		Id:        req.Id,
+		Name:      req.Name,
+		IsVisible: req.IsVisible,
 	})
 	if err != nil {
 		return nil, err
