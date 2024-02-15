@@ -77,9 +77,11 @@ func (s sArticle) AddArticle(ctx context.Context, in *model.AddArticleInput) (ou
 	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 先插入文章表
 		article := &do.Article{
-			Title:    in.Title,
-			Content:  in.Content,
-			AuthorId: in.AuthorId,
+			Title:       in.Title,
+			Content:     in.Content,
+			Description: in.Description,
+			IsVisible:   in.IsVisible,
+			AuthorId:    in.AuthorId,
 		}
 		r, err := dao.Article.Ctx(ctx).Save(article)
 		if err != nil {

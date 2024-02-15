@@ -29,10 +29,12 @@ func (a Article) AddArticle(ctx context.Context, req *article.AddArticleReq) (re
 	res = &article.AddArticleRes{}
 
 	_, err = service.Article().AddArticle(ctx, &model.AddArticleInput{
-		Title:    req.Title,
-		Content:  req.Content,
-		AuthorId: req.AuthorId,
-		TagList:  req.TagList,
+		Title:       req.Title,
+		Content:     req.Content,
+		Description: req.Description,
+		IsVisible:   req.IsVisible,
+		AuthorId:    req.AuthorId,
+		TagList:     req.TagList,
 	})
 
 	return

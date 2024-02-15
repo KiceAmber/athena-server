@@ -20,10 +20,12 @@ type GetArticleListOutput struct {
 }
 
 type AddArticleInput struct {
-	Title    string `json:"title"`
-	Content  string `json:"content"`
-	AuthorId int    `json:"authorId"`
-	TagList  []int  `json:"tagList"`
+	Title       string `json:"title"`
+	Content     string `json:"content"`
+	Description string `json:"description"`
+	IsVisible   int    `json:"isVisible"`
+	AuthorId    int    `json:"authorId"`
+	TagList     []int  `json:"tagList"`
 }
 
 type AddArticleOutput struct {
