@@ -18,6 +18,7 @@ require (
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
+	github.com/goflyfox/gtoken v1.5.10 // indirect
 	github.com/golang-jwt/jwt/v4 v4.3.0 // indirect
 	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/gorilla/websocket v1.5.1 // indirect
