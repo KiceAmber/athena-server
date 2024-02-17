@@ -57,12 +57,15 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 			}
 
 			var article = &model.ArticleItem{
-				Id:         articleItem.Id,
-				Title:      articleItem.Title,
-				Content:    articleItem.Content,
-				Image:      articleItem.Image,
-				AuthorName: user.Passport,
-				TagList:    tagNameList,
+				Id:          articleItem.Id,
+				Title:       articleItem.Title,
+				Content:     articleItem.Content,
+				Image:       articleItem.Image,
+				AuthorName:  user.Passport,
+				TagList:     tagNameList,
+				Description: articleItem.Description,
+				IsVisible:   articleItem.IsVisible,
+				CreatedAt:   articleItem.CreatedAt,
 			}
 			out.ArticleList = append(out.ArticleList, article)
 		}
