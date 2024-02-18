@@ -14,7 +14,7 @@ func NewTag() *Tag {
 }
 
 func (t *Tag) GetTagList(ctx context.Context, req *tag.GetTagListReq) (res *tag.GetTagListRes, err error) {
-	out, err := service.Tag().GetTagList(ctx, &model.GetTagListInput{})
+	out, err := service.Tag().AdminGetTagList(ctx, &model.AdminGetTagListInput{})
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +25,7 @@ func (t *Tag) GetTagList(ctx context.Context, req *tag.GetTagListReq) (res *tag.
 }
 
 func (t *Tag) AddTag(ctx context.Context, req *tag.AddTagReq) (res *tag.AddTagRes, err error) {
-	_, err = service.Tag().AddTag(ctx, &model.AddTagInput{
+	_, err = service.Tag().AdminAddTag(ctx, &model.AdminAddTagInput{
 		Name:      req.Name,
 		IsVisible: req.IsVisible,
 	})
@@ -40,7 +40,7 @@ func (t *Tag) AddTag(ctx context.Context, req *tag.AddTagReq) (res *tag.AddTagRe
 
 func (t *Tag) DeleteTag(ctx context.Context, req *tag.DeleteTagReq) (res *tag.DeleteTagRes, err error) {
 
-	_, err = service.Tag().DeleteTag(ctx, &model.DeleteTagInput{
+	_, err = service.Tag().AdminDeleteTag(ctx, &model.AdminDeleteTagInput{
 		Id: req.Id,
 	})
 	if err != nil {
@@ -52,7 +52,7 @@ func (t *Tag) DeleteTag(ctx context.Context, req *tag.DeleteTagReq) (res *tag.De
 }
 
 func (t *Tag) UpdateTag(ctx context.Context, req *tag.UpdateTagReq) (res *tag.UpdateTagRes, err error) {
-	_, err = service.Tag().UpdateTag(ctx, &model.UpdateTagInput{
+	_, err = service.Tag().AdminUpdateTag(ctx, &model.AdminUpdateTagInput{
 		Id:        req.Id,
 		Name:      req.Name,
 		IsVisible: req.IsVisible,

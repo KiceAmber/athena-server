@@ -12,10 +12,10 @@ import (
 
 type (
 	ITag interface {
-		GetTagList(ctx context.Context, in *model.GetTagListInput) (out *model.GetTagListOutput, err error)
-		AddTag(ctx context.Context, in *model.AddTagInput) (out *model.AddTagOutput, err error)
-		UpdateTag(ctx context.Context, in *model.UpdateTagInput) (out *model.UpdateTagOutput, err error)
-		DeleteTag(ctx context.Context, in *model.DeleteTagInput) (out *model.DeleteTagOutput, err error)
+		AdminGetTagList(ctx context.Context, in *model.AdminGetTagListInput) (out *model.AdminGetTagListOutput, err error)
+		AdminAddTag(ctx context.Context, in *model.AdminAddTagInput) (out *model.AdminAddTagOutput, err error)
+		AdminUpdateTag(ctx context.Context, in *model.AdminUpdateTagInput) (out *model.AdminUpdateTagOutput, err error)
+		AdminDeleteTag(ctx context.Context, in *model.AdminDeleteTagInput) (out *model.AdminDeleteTagOutput, err error)
 	}
 )
 

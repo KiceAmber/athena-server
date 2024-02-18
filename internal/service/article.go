@@ -12,9 +12,9 @@ import (
 
 type (
 	IArticle interface {
-		GetArticleList(ctx context.Context, in *model.GetArticleListInput) (out *model.GetArticleListOutput, err error)
-		AddArticle(ctx context.Context, in *model.AddArticleInput) (out *model.AddArticleOutput, err error)
-		DeleteArticle(ctx context.Context, in *model.DeleteArticleInput) (out *model.DeleteArticleOutput, err error)
+		GetArticleList(ctx context.Context, in *model.AdminGetArticleListInput) (out *model.AdminGetArticleListOutput, err error)
+		AddArticle(ctx context.Context, in *model.AdminAddArticleInput) (out *model.AdminAddArticleOutput, err error)
+		DeleteArticle(ctx context.Context, in *model.AdminDeleteArticleInput) (out *model.AdminDeleteArticleOutput, err error)
 	}
 )
 

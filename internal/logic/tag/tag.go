@@ -20,15 +20,16 @@ func New() *sTag {
 	return &sTag{}
 }
 
-func (s sTag) GetTagList(ctx context.Context, in *model.GetTagListInput) (out *model.GetTagListOutput, err error) {
+func (s sTag) AdminGetTagList(ctx context.Context, in *model.AdminGetTagListInput) (out *model.AdminGetTagListOutput, err error) {
+	out = &model.AdminGetTagListOutput{
+		TagList: []*model.TagItem{},
+	}
+
 	tagList := []*entity.Tag{}
 	if err = dao.Tag.Ctx(ctx).Scan(&tagList); err != nil {
 		return nil, err
 	}
 
-	out = &model.GetTagListOutput{
-		TagList: []*model.TagItem{},
-	}
 	for _, tagEntity := range tagList {
 		out.TagList = append(out.TagList, &model.TagItem{
 			Id:        tagEntity.Id,
@@ -40,7 +41,9 @@ func (s sTag) GetTagList(ctx context.Context, in *model.GetTagListInput) (out *m
 	return
 }
 
-func (s sTag) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.AddTagOutput, err error) {
+func (s sTag) AdminAddTag(ctx context.Context, in *model.AdminAddTagInput) (out *model.AdminAddTagOutput, err error) {
+	out = &model.AdminAddTagOutput{}
+
 	var tag *entity.Tag
 	if err = dao.Tag.Ctx(ctx).Where(do.Tag{
 		Name: in.Name,
@@ -60,11 +63,12 @@ func (s sTag) AddTag(ctx context.Context, in *model.AddTagInput) (out *model.Add
 		return nil, err
 	}
 
-	out = &model.AddTagOutput{}
 	return
 }
 
-func (s sTag) UpdateTag(ctx context.Context, in *model.UpdateTagInput) (out *model.UpdateTagOutput, err error) {
+func (s sTag) AdminUpdateTag(ctx context.Context, in *model.AdminUpdateTagInput) (out *model.AdminUpdateTagOutput, err error) {
+	out = &model.AdminUpdateTagOutput{}
+
 	_, err = dao.Tag.Ctx(ctx).Where(do.Tag{Id: in.Id}).Data(do.Tag{
 		Name:      in.Name,
 		IsVisible: in.IsVisible,
@@ -73,13 +77,11 @@ func (s sTag) UpdateTag(ctx context.Context, in *model.UpdateTagInput) (out *mod
 		return nil, err
 	}
 
-	out = &model.UpdateTagOutput{}
 	return
 }
 
-func (s sTag) DeleteTag(ctx context.Context, in *model.DeleteTagInput) (out *model.DeleteTagOutput, err error) {
+func (s sTag) AdminDeleteTag(ctx context.Context, in *model.AdminDeleteTagInput) (out *model.AdminDeleteTagOutput, err error) {
 	// Unscoped 表示不使用软删除来删除数据库记录
 	_, err = dao.Tag.Ctx(ctx).Where("id = ?", in.Id).Unscoped().Delete()
-
 	return
 }

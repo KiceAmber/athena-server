@@ -21,8 +21,8 @@ func New() *sArticle {
 	return &sArticle{}
 }
 
-func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListInput) (out *model.GetArticleListOutput, err error) {
-	out = &model.GetArticleListOutput{
+func (s sArticle) GetArticleList(ctx context.Context, in *model.AdminGetArticleListInput) (out *model.AdminGetArticleListOutput, err error) {
+	out = &model.AdminGetArticleListOutput{
 		ArticleList: make([]*model.ArticleItem, 0),
 	}
 
@@ -74,8 +74,8 @@ func (s sArticle) GetArticleList(ctx context.Context, in *model.GetArticleListIn
 	return
 }
 
-func (s sArticle) AddArticle(ctx context.Context, in *model.AddArticleInput) (out *model.AddArticleOutput, err error) {
-	out = &model.AddArticleOutput{}
+func (s sArticle) AddArticle(ctx context.Context, in *model.AdminAddArticleInput) (out *model.AdminAddArticleOutput, err error) {
+	out = &model.AdminAddArticleOutput{}
 
 	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 先插入文章表
@@ -114,8 +114,8 @@ func (s sArticle) AddArticle(ctx context.Context, in *model.AddArticleInput) (ou
 	return
 }
 
-func (s sArticle) DeleteArticle(ctx context.Context, in *model.DeleteArticleInput) (out *model.DeleteArticleOutput, err error) {
-	out = &model.DeleteArticleOutput{}
+func (s sArticle) DeleteArticle(ctx context.Context, in *model.AdminDeleteArticleInput) (out *model.AdminDeleteArticleOutput, err error) {
+	out = &model.AdminDeleteArticleOutput{}
 
 	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 删除文章表的记录

@@ -13,15 +13,16 @@ type ArticleItem struct {
 	IsVisible   int         `json:"isVisible"`
 	CreatedAt   *gtime.Time `json:"createdAt"`
 	UpdatedAt   *gtime.Time `json:"updatedAt"`
+	DeletedAt   *gtime.Time `json:"deletedAt"`
 }
 
-type GetArticleListInput struct{}
+type AdminGetArticleListInput struct{}
 
-type GetArticleListOutput struct {
+type AdminGetArticleListOutput struct {
 	ArticleList []*ArticleItem `json:"articleList"`
 }
 
-type AddArticleInput struct {
+type AdminAddArticleInput struct {
 	Title       string `json:"title"`
 	Content     string `json:"content"`
 	Description string `json:"description"`
@@ -30,12 +31,12 @@ type AddArticleInput struct {
 	TagList     []int  `json:"tagList"`
 }
 
-type AddArticleOutput struct {
+type AdminAddArticleOutput struct {
 }
 
-type DeleteArticleInput struct {
+type AdminDeleteArticleInput struct {
 	Id int `json:"id"`
 }
 
-type DeleteArticleOutput struct {
+type AdminDeleteArticleOutput struct {
 }

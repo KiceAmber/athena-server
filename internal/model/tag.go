@@ -13,31 +13,31 @@ type TagItem struct {
 	DeletedAt *gtime.Time `json:"deletedAt"`
 }
 
-type GetTagListInput struct {
+type AdminGetTagListInput struct {
 }
 
-type GetTagListOutput struct {
+type AdminGetTagListOutput struct {
 	TagList []*TagItem `json:"tagList"`
 }
 
-type AddTagInput struct {
+type AdminAddTagInput struct {
 	Name      string `json:"name"`
 	IsVisible int    `json:"isVisible"`
 }
 
-type AddTagOutput struct {
+type AdminAddTagOutput struct {
 }
 
-type DeleteTagInput struct {
+type AdminDeleteTagInput struct {
 	Id int `json:"id"`
 }
 
-type DeleteTagOutput struct{}
+type AdminDeleteTagOutput struct{}
 
-type UpdateTagInput struct {
+type AdminUpdateTagInput struct {
 	Id        int    `json:"id"`
 	Name      string `json:"name"`
 	IsVisible int    `json:"isVisible"`
 }
 
-type UpdateTagOutput struct{}
+type AdminUpdateTagOutput struct{}
