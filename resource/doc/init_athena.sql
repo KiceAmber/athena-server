@@ -19,8 +19,8 @@ create table `user` (
 create table `tag` (
     `id` int not null auto_increment comment '标签ID',
     `name` varchar(64) not null comment '标签名称',
-    `author_id` int not null comment '标签作者ID',
-    `is_visible` tinyint not null default 1 comment '标签是否可见 1-不可见 0-可见',
+    `author_id` int not null comment '创建标签的作者ID',
+    `is_visible` tinyint not null default 1 comment '标签是否可见 1-可见 0-不可见',
     `created_at` timestamp not null default current_timestamp comment '创建时间',
     `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     `deleted_at` timestamp default null comment '删除时间',
@@ -35,7 +35,8 @@ create table `article` (
     `image` varchar(128) default '' comment '文章图片封面',
     `author_id` int not null comment '文章作者ID',
     `description` varchar(1024) default '暂无文章概述' comment '文章概述',
-    `is_visible` tinyint not null default 1 comment '文章是否可见 1-不可见 0-可见',
+    `is_visible` tinyint not null default 1 comment '文章是否可见 1-可见 0-不可见',
+    `category_id` int not null comment '文章分类ID',
     `created_at` timestamp not null default current_timestamp comment '创建时间',
     `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     `deleted_at` timestamp default null comment '删除时间',
@@ -57,13 +58,16 @@ create table `article_tag` (
 create table `category` (
     `id` int not null auto_increment comment '分类ID',
     `name` varchar(64) not null comment '分类名称',
-    `author_id` int not null comment '分类作者ID',
-    `is_visible` tinyint not null default 1 comment '分类是否可见 1-不可见 0-可见',
+    `author_id` int not null comment '创建分类的作者ID',
+    `is_visible` tinyint not null default 1 comment '分类是否可见 1-可见 0-不可见',
     `created_at` timestamp not null default current_timestamp comment '创建时间',
     `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     `deleted_at` timestamp default null comment '删除时间',
     primary key (`id`)
 );
+
+-- table of image
+# create table `image` ();
 
 -- table of role
 create table `role` (

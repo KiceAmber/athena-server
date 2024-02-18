@@ -10,6 +10,7 @@ type TagItem struct {
 	IsVisible int         `json:"isVisible"`
 	CreatedAt *gtime.Time `json:"createdAt"`
 	UpdatedAt *gtime.Time `json:"updatedAt"`
+	DeletedAt *gtime.Time `json:"deletedAt"`
 }
 
 type GetTagListInput struct {

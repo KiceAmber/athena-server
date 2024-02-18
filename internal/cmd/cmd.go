@@ -35,6 +35,9 @@ var (
 					adminGroup.Group("/article", func(group *ghttp.RouterGroup) {
 						group.Bind(admin.NewArticle())
 					})
+					adminGroup.Group("/category", func(group *ghttp.RouterGroup) {
+						group.Bind(admin.NewCategory())
+					})
 				})
 
 				// 博客前台请求路由组
