@@ -16,6 +16,8 @@ type ArticleItem struct {
 	DeletedAt   *gtime.Time `json:"deletedAt"`
 }
 
+// Admin Module
+
 type AdminGetArticleListInput struct{}
 
 type AdminGetArticleListOutput struct {
@@ -39,4 +41,13 @@ type AdminDeleteArticleInput struct {
 }
 
 type AdminDeleteArticleOutput struct {
+}
+
+// Blog Module
+
+type BlogGetArticleListInput struct {
+}
+
+type BlogGetArticleListOutput struct {
+	ArticleList []*ArticleItem `json:"articleList"`
 }

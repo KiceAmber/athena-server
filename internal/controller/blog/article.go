@@ -16,7 +16,7 @@ func NewArticle() *Article {
 func (a Article) GetArticleList(ctx context.Context, req *article.GetArticleListReq) (res *article.GetArticleListRes, err error) {
 	res = &article.GetArticleListRes{}
 
-	out, err := service.Article().GetArticleList(ctx, &model.GetArticleListInput{})
+	out, err := service.Article().BlogGetArticleList(ctx, &model.BlogGetArticleListInput{})
 	if err != nil {
 		return res, err
 	}

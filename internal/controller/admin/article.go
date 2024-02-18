@@ -16,7 +16,7 @@ func NewArticle() *Article {
 func (a Article) GetArticleList(ctx context.Context, req *article.GetArticleListReq) (res *article.GetArticleListRes, err error) {
 	res = &article.GetArticleListRes{}
 
-	out, err := service.Article().GetArticleList(ctx, &model.AdminGetArticleListInput{})
+	out, err := service.Article().AdminGetArticleList(ctx, &model.AdminGetArticleListInput{})
 	if err != nil {
 		return res, err
 	}
@@ -28,7 +28,7 @@ func (a Article) GetArticleList(ctx context.Context, req *article.GetArticleList
 func (a Article) AddArticle(ctx context.Context, req *article.AddArticleReq) (res *article.AddArticleRes, err error) {
 	res = &article.AddArticleRes{}
 
-	_, err = service.Article().AddArticle(ctx, &model.AdminAddArticleInput{
+	_, err = service.Article().AdminAddArticle(ctx, &model.AdminAddArticleInput{
 		Title:       req.Title,
 		Content:     req.Content,
 		Description: req.Description,
@@ -43,7 +43,7 @@ func (a Article) AddArticle(ctx context.Context, req *article.AddArticleReq) (re
 func (a Article) DeleteArticle(ctx context.Context, req *article.DeleteArticleReq) (res *article.DeleteArticleRes, err error) {
 	res = &article.DeleteArticleRes{}
 
-	_, err = service.Article().DeleteArticle(ctx, &model.AdminDeleteArticleInput{
+	_, err = service.Article().AdminDeleteArticle(ctx, &model.AdminDeleteArticleInput{
 		Id: req.Id,
 	})
 	if err != nil {
