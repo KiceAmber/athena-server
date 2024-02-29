@@ -23,8 +23,9 @@ type ArticleColumns struct {
 	Id          string // 文章ID
 	Title       string // 文章标题
 	Content     string // 文章内容
-	Image       string // 文章图片封面
+	Cover       string // 文章图片封面
 	AuthorId    string // 文章作者ID
+	CategoryId  string // 文章分类ID
 	Description string // 文章概述
 	IsVisible   string // 文章是否可见 1-可见 0-不可见
 	CreatedAt   string // 创建时间
@@ -37,8 +38,9 @@ var articleColumns = ArticleColumns{
 	Id:          "id",
 	Title:       "title",
 	Content:     "content",
-	Image:       "image",
+	Cover:       "cover",
 	AuthorId:    "author_id",
+	CategoryId:  "category_id",
 	Description: "description",
 	IsVisible:   "is_visible",
 	CreatedAt:   "created_at",

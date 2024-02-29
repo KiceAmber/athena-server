@@ -7,6 +7,7 @@ import (
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
+
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -53,16 +54,16 @@ func (s sArticle) AdminGetArticleList(ctx context.Context, in *model.AdminGetArt
 			}
 
 			// 查询文章作者
-			var user = &entity.User{}
+			user := &entity.User{}
 			if err = dao.User.Ctx(ctx).Where("id = ?", articleItem.AuthorId).Scan(&user); err != nil {
 				return err
 			}
 
-			var article = &model.ArticleItem{
+			article := &model.ArticleItem{
 				Id:          articleItem.Id,
 				Title:       articleItem.Title,
 				Content:     articleItem.Content,
-				Image:       articleItem.Image,
+				Cover:       articleItem.Cover,
 				AuthorName:  user.Passport,
 				TagList:     tagNameList,
 				Description: articleItem.Description,
@@ -172,16 +173,16 @@ func (s sArticle) BlogGetArticleList(ctx context.Context, in *model.BlogGetArtic
 			}
 
 			// 查询文章作者
-			var user = &entity.User{}
+			user := &entity.User{}
 			if err = dao.User.Ctx(ctx).Where("id = ?", articleItem.AuthorId).Scan(&user); err != nil {
 				return err
 			}
 
-			var article = &model.ArticleItem{
+			article := &model.ArticleItem{
 				Id:          articleItem.Id,
 				Title:       articleItem.Title,
 				Content:     articleItem.Content,
-				Image:       articleItem.Image,
+				Cover:       articleItem.Cover,
 				AuthorName:  user.Passport,
 				TagList:     tagNameList,
 				Description: articleItem.Description,
@@ -192,5 +193,24 @@ func (s sArticle) BlogGetArticleList(ctx context.Context, in *model.BlogGetArtic
 		}
 		return nil
 	})
+	return
+}
+
+func (s sArticle) BlogGetArticleDetail(ctx context.Context, in *model.BlogGetArticleDetailInput) (out *model.BlogGetArticleDetailOutput, err error) {
+	out = &model.BlogGetArticleDetailOutput{}
+
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 获取文章的详情，也就是 content 的数据
+		articleItem := &entity.Article{}
+		if err = dao.Article.Ctx(ctx).Where("id = ?", in.Id).Scan(&articleItem); err != nil {
+			return err
+		}
+
+		out.Content = articleItem.Content
+		return nil
+	}); err != nil {
+		return
+	}
+
 	return
 }

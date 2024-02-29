@@ -7,7 +7,7 @@ type ArticleItem struct {
 	Title       string      `json:"title"`
 	AuthorName  string      `json:"authorName"`
 	Content     string      `json:"content"`
-	Image       string      `json:"image"`
+	Cover       string      `json:"cover"`
 	TagList     []string    `json:"tagList"`
 	Description string      `json:"description"`
 	IsVisible   int         `json:"isVisible"`
@@ -33,21 +33,26 @@ type AdminAddArticleInput struct {
 	TagList     []int  `json:"tagList"`
 }
 
-type AdminAddArticleOutput struct {
-}
+type AdminAddArticleOutput struct{}
 
 type AdminDeleteArticleInput struct {
 	Id int `json:"id"`
 }
 
-type AdminDeleteArticleOutput struct {
-}
+type AdminDeleteArticleOutput struct{}
 
 // Blog Module
 
-type BlogGetArticleListInput struct {
-}
+type BlogGetArticleListInput struct{}
 
 type BlogGetArticleListOutput struct {
 	ArticleList []*ArticleItem `json:"articleList"`
+}
+
+type BlogGetArticleDetailInput struct {
+	Id int `json:"id"`
+}
+
+type BlogGetArticleDetailOutput struct {
+	Content string `json:"content"`
 }

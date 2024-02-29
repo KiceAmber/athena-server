@@ -11,66 +11,64 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// TagDao is the data access object for table tag.
-type TagDao struct {
-	table   string     // table is the underlying table name of the DAO.
-	group   string     // group is the database configuration group name of current DAO.
-	columns TagColumns // columns contains all the column names of Table for convenient usage.
+// FriendLinkDao is the data access object for table friend_link.
+type FriendLinkDao struct {
+	table   string            // table is the underlying table name of the DAO.
+	group   string            // group is the database configuration group name of current DAO.
+	columns FriendLinkColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// TagColumns defines and stores column names for table tag.
-type TagColumns struct {
-	Id        string // 标签ID
-	Name      string // 标签名称
-	AuthorId  string // 创建标签的用户ID
-	IsVisible string // 标签是否可见 1-可见 0-不可见
+// FriendLinkColumns defines and stores column names for table friend_link.
+type FriendLinkColumns struct {
+	Id        string // 友链ID
+	Url       string // 链接路径
+	Icon      string // 友链图标
 	CreatedAt string // 创建时间
-	UpdatedAt string // 更新时间
+	UpdatedAt string // 修改时间
 	DeletedAt string // 删除时间
 }
 
-// tagColumns holds the columns for table tag.
-var tagColumns = TagColumns{
+// friendLinkColumns holds the columns for table friend_link.
+var friendLinkColumns = FriendLinkColumns{
 	Id:        "id",
-	Name:      "name",
-	AuthorId:  "author_id",
-	IsVisible: "is_visible",
+	Url:       "url",
+	Icon:      "icon",
 	CreatedAt: "created_at",
 	UpdatedAt: "updated_at",
 	DeletedAt: "deleted_at",
 }
 
-// NewTagDao creates and returns a new DAO object for table data access.
-func NewTagDao() *TagDao {
-	return &TagDao{
+// NewFriendLinkDao creates and returns a new DAO object for table data access.
+func NewFriendLinkDao() *FriendLinkDao {
+	return &FriendLinkDao{
 		group:   "default",
-		table:   "tag",
-		columns: tagColumns,
+		table:   "friend_link",
+		columns: friendLinkColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *TagDao) DB() gdb.DB {
+func (dao *FriendLinkDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *TagDao) Table() string {
+func (dao *FriendLinkDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *TagDao) Columns() TagColumns {
+func (dao *FriendLinkDao) Columns() FriendLinkColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *TagDao) Group() string {
+func (dao *FriendLinkDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *TagDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *FriendLinkDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -80,6 +78,6 @@ func (dao *TagDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *TagDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *FriendLinkDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

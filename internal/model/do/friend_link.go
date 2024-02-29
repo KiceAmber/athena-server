@@ -9,14 +9,13 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Tag is the golang structure of table tag for DAO operations like Where/Data.
-type Tag struct {
-	g.Meta    `orm:"table:tag, do:true"`
-	Id        interface{} // 标签ID
-	Name      interface{} // 标签名称
-	AuthorId  interface{} // 创建标签的用户ID
-	IsVisible interface{} // 标签是否可见 1-可见 0-不可见
+// FriendLink is the golang structure of table friend_link for DAO operations like Where/Data.
+type FriendLink struct {
+	g.Meta    `orm:"table:friend_link, do:true"`
+	Id        interface{} // 友链ID
+	Url       interface{} // 链接路径
+	Icon      interface{} // 友链图标
 	CreatedAt *gtime.Time // 创建时间
-	UpdatedAt *gtime.Time // 更新时间
+	UpdatedAt *gtime.Time // 修改时间
 	DeletedAt *gtime.Time // 删除时间
 }

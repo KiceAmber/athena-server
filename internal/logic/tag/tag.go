@@ -57,6 +57,7 @@ func (s sTag) AdminAddTag(ctx context.Context, in *model.AdminAddTagInput) (out 
 
 	_, err = dao.Tag.Ctx(ctx).Data(do.Tag{
 		Name:      in.Name,
+		AuthorId:  1, // 这里先暂时为 1，后续动态变化 TODO:
 		IsVisible: in.IsVisible,
 	}).Insert()
 	if err != nil {

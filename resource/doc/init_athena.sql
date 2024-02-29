@@ -32,7 +32,7 @@ create table `article` (
     `id` int not null auto_increment comment '文章ID',  
     `title` varchar(128) not null comment '文章标题',
     `content` text not null comment '文章内容',
-    `image` varchar(128) default '' comment '文章图片封面',
+    `cover` varchar(128) default '' comment '文章图片封面',
     `author_id` int not null comment '文章作者ID',
     `description` varchar(1024) default '暂无文章概述' comment '文章概述',
     `is_visible` tinyint not null default 1 comment '文章是否可见 1-可见 0-不可见',
@@ -66,24 +66,11 @@ create table `category` (
     primary key (`id`)
 );
 
--- table of image
-# create table `image` ();
-
--- table of role
-create table `role` (
-    `id` int not null auto_increment comment '角色ID',
-    `name` varchar(64) not null comment '角色名称',
-    `created_at` timestamp not null default current_timestamp comment '创建时间',
-    `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
-    `deleted_at` timestamp default null comment '删除时间',
-    primary key (`id`)
-);
-
--- table of menu
-create table `menu` (
-    `id` int not null auto_increment comment '菜单ID',
-    `name` varchar(64) not null comment '菜单名称',
-    `url` varchar(128) not null comment '菜单URL',
+-- table of friend_link
+create table `friend_link` (
+    `id` int not null auto_increment comment '友链ID',
+    `url` varchar(128) not null comment '链接路径',
+    `icon` varchar(128) not null comment '友链图标',
     `created_at` timestamp not null default current_timestamp comment '创建时间',
     `updated_at` timestamp not null default current_timestamp on update current_timestamp comment '修改时间',
     `deleted_at` timestamp default null comment '删除时间',

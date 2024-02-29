@@ -8,13 +8,12 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Tag is the golang structure for table tag.
-type Tag struct {
-	Id        int         `json:"id"         ` // 标签ID
-	Name      string      `json:"name"       ` // 标签名称
-	AuthorId  int         `json:"author_id"  ` // 创建标签的用户ID
-	IsVisible int         `json:"is_visible" ` // 标签是否可见 1-可见 0-不可见
+// FriendLink is the golang structure for table friend_link.
+type FriendLink struct {
+	Id        int         `json:"id"         ` // 友链ID
+	Url       string      `json:"url"        ` // 链接路径
+	Icon      string      `json:"icon"       ` // 友链图标
 	CreatedAt *gtime.Time `json:"created_at" ` // 创建时间
-	UpdatedAt *gtime.Time `json:"updated_at" ` // 更新时间
+	UpdatedAt *gtime.Time `json:"updated_at" ` // 修改时间
 	DeletedAt *gtime.Time `json:"deleted_at" ` // 删除时间
 }
