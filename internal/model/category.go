@@ -30,3 +30,11 @@ type AdminDeleteCategoryInput struct {
 }
 
 type AdminDeleteCategoryOutput struct{}
+
+type AdminUpdateCategoryInput struct {
+	Id        int    `json:"id"`
+	IsVisible int    `json:"isVisible"`
+	Name      string `json:"name"`
+}
+
+type AdminUpdateCategoryOutput struct{}

@@ -48,3 +48,18 @@ func (c Category) DeleteCategory(ctx context.Context, req *category.DeleteCatego
 
 	return
 }
+
+func (c Category) UpdateCategory(ctx context.Context, req *category.UpdateCategoryReq) (res *category.UpdateCategoryRes, err error) {
+	res = &category.UpdateCategoryRes{}
+
+	_, err = service.Category().AdminUpdateCategory(ctx, &model.AdminUpdateCategoryInput{
+		Id:        req.Id,
+		Name:      req.Name,
+		IsVisible: req.IsVisible,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return
+}

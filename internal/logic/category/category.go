@@ -93,3 +93,17 @@ func (s sCategory) AdminDeleteCategory(ctx context.Context, in *model.AdminDelet
 
 	return
 }
+
+func (s sCategory) AdminUpdateCategory(ctx context.Context, in *model.AdminUpdateCategoryInput) (out *model.AdminUpdateCategoryOutput, err error) {
+	out = &model.AdminUpdateCategoryOutput{}
+
+	_, err = dao.Category.Ctx(ctx).Where("id = ?", in.Id).Update(&do.Category{
+		Name:      in.Name,
+		IsVisible: in.IsVisible,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return
+}
