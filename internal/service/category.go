@@ -12,8 +12,9 @@ import (
 
 type (
 	ICategory interface {
-		AdminAddCategory(ctx context.Context, in *model.AdminAddCategoryInput) (out *model.AdminAddCategoryOutput, err error)
 		AdminGetCategoryList(ctx context.Context, in *model.AdminGetCategoryListInput) (out *model.AdminGetCategoryListOutput, err error)
+		AdminAddCategory(ctx context.Context, in *model.AdminAddCategoryInput) (out *model.AdminAddCategoryOutput, err error)
+		AdminDeleteCategory(ctx context.Context, in *model.AdminDeleteCategoryInput) (out *model.AdminDeleteCategoryOutput, err error)
 	}
 )
 

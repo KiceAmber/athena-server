@@ -19,9 +19,14 @@ type AdminAddCategoryInput struct {
 
 type AdminAddCategoryOutput struct{}
 
-type AdminGetCategoryListInput struct {
-}
+type AdminGetCategoryListInput struct{}
 
 type AdminGetCategoryListOutput struct {
 	CategoryList []*CategoryItem `json:"categoryList"`
 }
+
+type AdminDeleteCategoryInput struct {
+	Id int `json:"id"`
+}
+
+type AdminDeleteCategoryOutput struct{}

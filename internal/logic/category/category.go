@@ -7,6 +7,8 @@ import (
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
 )
 
 type sCategory struct{}
@@ -18,6 +20,8 @@ func init() {
 func New() *sCategory {
 	return &sCategory{}
 }
+
+// admin
 
 func (s sCategory) AdminGetCategoryList(ctx context.Context, in *model.AdminGetCategoryListInput) (out *model.AdminGetCategoryListOutput, err error) {
 	out = &model.AdminGetCategoryListOutput{
@@ -58,6 +62,33 @@ func (s sCategory) AdminAddCategory(ctx context.Context, in *model.AdminAddCateg
 	})
 	if err != nil {
 		return nil, err
+	}
+
+	return
+}
+
+func (s sCategory) AdminDeleteCategory(ctx context.Context, in *model.AdminDeleteCategoryInput) (out *model.AdminDeleteCategoryOutput, err error) {
+	out = &model.AdminDeleteCategoryOutput{}
+
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+
+		// 删除该分类
+		_, err = dao.Category.Ctx(ctx).Unscoped().Delete("id = ?", in.Id)
+		if err != nil {
+			return err
+		}
+
+		// 删除与该分类关联的所有文章，将该文章的 category_id 设置为 0
+		_, err = dao.Article.Ctx(ctx).Where("category_id = ?", in.Id).Update(&do.Article{
+			CategoryId: 0,
+		})
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}); err != nil {
+		return
 	}
 
 	return

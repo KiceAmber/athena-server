@@ -38,3 +38,13 @@ func (c Category) AddCategory(ctx context.Context, req *category.AddCategoryReq)
 
 	return
 }
+
+func (c Category) DeleteCategory(ctx context.Context, req *category.DeleteCategoryReq) (res *category.DeleteCategoryRes, err error) {
+	res = &category.DeleteCategoryRes{}
+
+	_, err = service.Category().AdminDeleteCategory(ctx, &model.AdminDeleteCategoryInput{
+		Id: req.Id,
+	})
+
+	return
+}
