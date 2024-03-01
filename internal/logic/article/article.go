@@ -7,7 +7,7 @@ import (
 	"athena-server/internal/model/entity"
 	"athena-server/internal/service"
 	"context"
-
+	"fmt"
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -54,7 +54,7 @@ func (s sArticle) AdminGetArticleList(ctx context.Context, in *model.AdminGetArt
 			}
 
 			// 查询文章作者
-			user := &entity.User{}
+			var user = &entity.User{}
 			if err = dao.User.Ctx(ctx).Where("id = ?", articleItem.AuthorId).Scan(&user); err != nil {
 				return err
 			}
@@ -70,10 +70,26 @@ func (s sArticle) AdminGetArticleList(ctx context.Context, in *model.AdminGetArt
 				IsVisible:   articleItem.IsVisible,
 				CreatedAt:   articleItem.CreatedAt,
 			}
+
+			// 查询文章分类，但如果分类 ID 为 0，则说明该文章没有分类
+			var categoryItem = &entity.Category{}
+			if articleItem.CategoryId != 0 {
+				if err = dao.Category.Ctx(ctx).Where("id = ?", articleItem.CategoryId).Scan(&categoryItem); err != nil {
+					return err
+				}
+			} else {
+				article.CategoryName = "无分类"
+			}
+
 			out.ArticleList = append(out.ArticleList, article)
 		}
 		return nil
 	})
+	fmt.Println(err)
+
+	if len(articleList) == 0 {
+		return out, nil
+	}
 	return
 }
 

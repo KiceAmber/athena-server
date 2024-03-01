@@ -5,6 +5,7 @@ import (
 	"athena-server/internal/model"
 	"athena-server/internal/service"
 	"context"
+	"fmt"
 )
 
 type Article struct{}
@@ -18,6 +19,7 @@ func (a Article) GetArticleList(ctx context.Context, req *article.GetArticleList
 
 	out, err := service.Article().AdminGetArticleList(ctx, &model.AdminGetArticleListInput{})
 	if err != nil {
+		fmt.Println("====>", out.ArticleList)
 		return res, err
 	}
 
