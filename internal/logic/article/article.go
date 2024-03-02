@@ -141,13 +141,13 @@ func (s sArticle) AdminDeleteArticle(ctx context.Context, in *model.AdminDeleteA
 
 	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
 		// 删除文章表的记录
-		_, err := dao.Article.Ctx(ctx).Where("id = ?", in.Id).Delete()
+		_, err := dao.Article.Ctx(ctx).Where("id = ?", in.Id).Unscoped().Delete()
 		if err != nil {
 			return err
 		}
 
 		// 删除文章标签关联表的记录
-		_, err = dao.ArticleTag.Ctx(ctx).Where("article_id = ?", in.Id).Delete()
+		_, err = dao.ArticleTag.Ctx(ctx).Where("article_id = ?", in.Id).Unscoped().Delete()
 		if err != nil {
 			return err
 		}
