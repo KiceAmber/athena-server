@@ -37,6 +37,8 @@ func (a Article) AddArticle(ctx context.Context, req *article.AddArticleReq) (re
 		IsVisible:   req.IsVisible,
 		AuthorId:    req.AuthorId,
 		TagList:     req.TagList,
+		CategoryId:  req.CategoryId,
+		// Cover: req.Cover,
 	})
 
 	return

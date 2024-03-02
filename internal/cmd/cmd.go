@@ -23,9 +23,9 @@ var Main = gcmd.Command{
 			// 博客后台请求路由组
 			apiGroup.Group("/admin", func(adminGroup *ghttp.RouterGroup) {
 				// 添加 gToken 中间件
-				if err = middleware.Auth().Middleware(ctx, adminGroup); err != nil {
-					panic(err)
-				}
+				// if err = middleware.Auth().Middleware(ctx, adminGroup); err != nil {
+				// 	panic(err)
+				// }
 
 				adminGroup.Group("/tag", func(group *ghttp.RouterGroup) {
 					group.Bind(admin.NewTag())

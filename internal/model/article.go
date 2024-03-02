@@ -17,7 +17,7 @@ type ArticleItem struct {
 	DeletedAt    *gtime.Time `json:"deletedAt"`
 }
 
-// Admin Module
+// Admin
 
 type AdminGetArticleListInput struct{}
 
@@ -32,6 +32,8 @@ type AdminAddArticleInput struct {
 	IsVisible   int    `json:"isVisible"`
 	AuthorId    int    `json:"authorId"`
 	TagList     []int  `json:"tagList"`
+	CategoryId  int    `json:"categoryId"`
+	// Cover       string `json:"cover"`
 }
 
 type AdminAddArticleOutput struct{}

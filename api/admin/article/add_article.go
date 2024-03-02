@@ -7,9 +7,11 @@ type AddArticleReq struct {
 	Title       string `json:"title"`
 	Content     string `json:"content"`
 	Description string `json:"description"`
-	IsVisible   int    `json:"isVisible"`
 	AuthorId    int    `json:"authorId"`
 	TagList     []int  `json:"tagList"`
+	CategoryId  int    `json:"categoryId"`
+	IsVisible   int    `json:"isVisible"`
+	//Cover       string `json:"cover"`
 }
 
 type AddArticleRes struct {
