@@ -44,6 +44,28 @@ type AdminDeleteArticleInput struct {
 
 type AdminDeleteArticleOutput struct{}
 
+type AdminGetArticleDetailInput struct {
+	Id int `json:"id"`
+}
+
+type AdminGetArticleDetailOutput struct {
+	Articel *ArticleItem `json:"article"`
+}
+
+type AdminUpdateArticleInput struct {
+	Id          int    `json:"id"`
+	Title       string `json:"title"`
+	Content     string `json:"content"`
+	Description string `json:"description"`
+	AuthorId    int    `json:"authorId"`
+	TagList     []int  `json:"tagList"`
+	CategoryId  int    `json:"categoryId"`
+	IsVisible   int    `json:"isVisible"`
+	//Cover       string `json:"cover"`
+}
+
+type AdminUpdateArticleOutput struct{}
+
 // Blog
 
 type BlogGetArticleListInput struct{}

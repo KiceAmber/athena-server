@@ -15,6 +15,8 @@ type (
 		AdminGetArticleList(ctx context.Context, in *model.AdminGetArticleListInput) (out *model.AdminGetArticleListOutput, err error)
 		AdminAddArticle(ctx context.Context, in *model.AdminAddArticleInput) (out *model.AdminAddArticleOutput, err error)
 		AdminDeleteArticle(ctx context.Context, in *model.AdminDeleteArticleInput) (out *model.AdminDeleteArticleOutput, err error)
+		AdminGetArticleDetail(ctx context.Context, in *model.AdminGetArticleDetailInput) (out *model.AdminGetArticleDetailOutput, err error)
+		AdminUpdateArticle(ctx context.Context, in *model.AdminUpdateArticleInput) (out *model.AdminUpdateArticleOutput, err error)
 		BlogGetArticleList(ctx context.Context, in *model.BlogGetArticleListInput) (out *model.BlogGetArticleListOutput, err error)
 		BlogGetArticleDetail(ctx context.Context, in *model.BlogGetArticleDetailInput) (out *model.BlogGetArticleDetailOutput, err error)
 	}

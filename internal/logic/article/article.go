@@ -160,6 +160,120 @@ func (s sArticle) AdminDeleteArticle(ctx context.Context, in *model.AdminDeleteA
 	return
 }
 
+func (s sArticle) AdminGetArticleDetail(ctx context.Context, in *model.AdminGetArticleDetailInput) (out *model.AdminGetArticleDetailOutput, err error) {
+	out = &model.AdminGetArticleDetailOutput{}
+	article := entity.Article{}
+	var (
+		category    = &entity.Category{}
+		author      = &entity.User{}
+		tagList     = make([]*entity.Tag, 0)
+		tagNameList = make([]string, 0)
+	)
+
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 查询文章信息
+		if err = dao.Article.Ctx(ctx).Where("id = ?", in.Id).Scan(&article); err != nil {
+			return err
+		}
+		// 查询文章分类信息
+		if err = dao.Category.Ctx(ctx).
+			Where("id = ?", article.CategoryId).
+			Scan(&category); err != nil {
+			return err
+		}
+		// 查询文章标签信息 select
+		if err := g.Model("tag t").
+			LeftJoin("article_tag at", "t.id = at.tag_id").
+			Fields("t.id, t.name").
+			Where("at.article_id = ?", article.Id).
+			Scan(&tagList); err != nil {
+			return err
+		}
+		for _, tag := range tagList {
+			tagNameList = append(tagNameList, tag.Name)
+		}
+
+		// 查询文章作者信息
+		if err = dao.User.Ctx(ctx).Where("id = ?", article.AuthorId).Scan(&author); err != nil {
+			return err
+		}
+
+		return nil
+	}); err != nil {
+		return
+	}
+
+	out.Articel = &model.ArticleItem{
+		Id:           article.Id,
+		Title:        article.Title,
+		AuthorName:   author.Passport,
+		Content:      article.Content,
+		Cover:        article.Cover,
+		CategoryName: category.Name,
+		TagList:      tagNameList,
+		Description:  article.Description,
+		IsVisible:    article.IsVisible,
+		CreatedAt:    article.CreatedAt,
+		UpdatedAt:    article.UpdatedAt,
+		DeletedAt:    article.DeletedAt,
+	}
+	return
+}
+
+func (s sArticle) AdminUpdateArticle(ctx context.Context, in *model.AdminUpdateArticleInput) (out *model.AdminUpdateArticleOutput, err error) {
+	out = &model.AdminUpdateArticleOutput{}
+
+	if err = g.DB().Transaction(ctx, func(ctx context.Context, tx gdb.TX) error {
+		// 先删除原先的文章记录
+		_, err = dao.Article.Ctx(ctx).Where("id = ?", in.Id).Unscoped().Delete()
+		if err != nil {
+			return err
+		}
+
+		// 再删除文章对应的标签表记录
+		_, err = dao.ArticleTag.Ctx(ctx).Where("article_id = ?", in.Id).Unscoped().Delete()
+		if err != nil {
+			return err
+		}
+
+		// 再插入修改后的文章记录
+		article := &entity.Article{
+			Title:       in.Title,
+			Content:     in.Content,
+			Description: in.Description,
+			IsVisible:   in.IsVisible,
+			AuthorId:    in.AuthorId,
+			CategoryId:  in.CategoryId,
+			// Cover: in.Cover,
+		}
+		r, err := dao.Article.Ctx(ctx).Save(article)
+		if err != nil {
+			return err
+		}
+
+		// 再插入文章标签表
+		articleId, err := r.LastInsertId()
+		if err != nil {
+			return err
+		}
+		for _, tagId := range in.TagList {
+			articleTag := &entity.ArticleTag{
+				ArticleId: int(articleId),
+				TagId:     tagId,
+			}
+			_, err := dao.ArticleTag.Ctx(ctx).Save(articleTag)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}); err != nil {
+		return
+	}
+
+	return
+}
+
 // Blog Service
 
 func (s sArticle) BlogGetArticleList(ctx context.Context, in *model.BlogGetArticleListInput) (out *model.BlogGetArticleListOutput, err error) {
@@ -185,7 +299,6 @@ func (s sArticle) BlogGetArticleList(ctx context.Context, in *model.BlogGetArtic
 				Scan(&tagList); err != nil {
 				return err
 			}
-
 			tagNameList := make([]string, 0)
 			for _, tag := range tagList {
 				tagNameList = append(tagNameList, tag.Name)

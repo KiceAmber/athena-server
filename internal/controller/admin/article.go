@@ -56,3 +56,34 @@ func (a Article) DeleteArticle(ctx context.Context, req *article.DeleteArticleRe
 
 	return
 }
+
+func (a Article) GetArticleDetail(ctx context.Context, req *article.GetArticleDetailReq) (res *article.GetArticleDetailRes, err error) {
+	res = &article.GetArticleDetailRes{}
+
+	out, err := service.Article().AdminGetArticleDetail(ctx, &model.AdminGetArticleDetailInput{
+		Id: req.Id,
+	})
+	if err != nil {
+		return
+	}
+	res.Article = out.Articel
+
+	return
+}
+
+func (a Article) UpdateArticle(ctx context.Context, req *article.UpdateArticleReq) (res *article.UpdateArticleRes, err error) {
+	res = &article.UpdateArticleRes{}
+
+	_, err = service.Article().AdminUpdateArticle(ctx, &model.AdminUpdateArticleInput{
+		Id:          req.Id,
+		Title:       req.Title,
+		Content:     req.Content,
+		Description: req.Description,
+		AuthorId:    req.AuthorId,
+		TagList:     req.TagList,
+		CategoryId:  req.CategoryId,
+		IsVisible:   req.IsVisible,
+	})
+
+	return
+}
