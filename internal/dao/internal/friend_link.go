@@ -21,6 +21,7 @@ type FriendLinkDao struct {
 // FriendLinkColumns defines and stores column names for table friend_link.
 type FriendLinkColumns struct {
 	Id        string // 友链ID
+	Name      string // 友链站点名称
 	Url       string // 链接路径
 	Icon      string // 友链图标
 	CreatedAt string // 创建时间
@@ -31,6 +32,7 @@ type FriendLinkColumns struct {
 // friendLinkColumns holds the columns for table friend_link.
 var friendLinkColumns = FriendLinkColumns{
 	Id:        "id",
+	Name:      "name",
 	Url:       "url",
 	Icon:      "icon",
 	CreatedAt: "created_at",

@@ -36,6 +36,9 @@ var Main = gcmd.Command{
 				adminGroup.Group("/category", func(group *ghttp.RouterGroup) {
 					group.Bind(admin.NewCategory())
 				})
+				adminGroup.Group("/friendlink", func(group *ghttp.RouterGroup) {
+					group.Bind(admin.NewFriendLink())
+				})
 			})
 
 			// 博客前台请求路由组

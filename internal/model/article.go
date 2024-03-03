@@ -44,7 +44,7 @@ type AdminDeleteArticleInput struct {
 
 type AdminDeleteArticleOutput struct{}
 
-// Blog Module
+// Blog
 
 type BlogGetArticleListInput struct{}
 

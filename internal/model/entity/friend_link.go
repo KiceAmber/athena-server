@@ -11,6 +11,7 @@ import (
 // FriendLink is the golang structure for table friend_link.
 type FriendLink struct {
 	Id        int         `json:"id"         ` // 友链ID
+	Name      string      `json:"name"       ` // 友链站点名称
 	Url       string      `json:"url"        ` // 链接路径
 	Icon      string      `json:"icon"       ` // 友链图标
 	CreatedAt *gtime.Time `json:"created_at" ` // 创建时间

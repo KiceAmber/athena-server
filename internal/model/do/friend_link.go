@@ -13,6 +13,7 @@ import (
 type FriendLink struct {
 	g.Meta    `orm:"table:friend_link, do:true"`
 	Id        interface{} // 友链ID
+	Name      interface{} // 友链站点名称
 	Url       interface{} // 链接路径
 	Icon      interface{} // 友链图标
 	CreatedAt *gtime.Time // 创建时间
