@@ -22,20 +22,13 @@ func New() *sAuth {
 func (s sAuth) Login(ctx context.Context, in *model.LoginInput) (out *model.LoginOutput, err error) {
 	out = &model.LoginOutput{}
 
-	token := "amber"
-
-	var user = &entity.User{}
-	if err = dao.User.Ctx(ctx).
-		Where("passport = ? and password = ?", in.Passport, in.Password).
-		Scan(&user); err != nil {
-		return nil, err
+	user := &entity.User{}
+	if err = dao.User.Ctx(ctx).Where("passport = ?", in.Passport).Scan(&user); err != nil {
+		return
+	}
+	if user.Password != in.Password {
+		return out, consts.ErrUserNotFound
 	}
 
-	if user == nil {
-		return nil, consts.ErrUserNotFound
-	}
-
-	out.Id = user.Id
-	out.Token = token
 	return
 }
